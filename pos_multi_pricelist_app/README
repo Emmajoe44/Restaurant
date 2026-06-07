@@ -1,0 +1,8 @@
+
+Version 13.0.1.3 : (25/02/20)
+		- Correction in price update when change in pricelist
+		- Solve currency and amount update issue
+		- Solve amount_total issue
+
+Version 13.0.1.4 : (27/02/20)
+		- Correction in amount_total

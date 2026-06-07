@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  ?? 2015-2016 Akretion (http://www.akretion.com/)
+  @author Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="product_category_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock_no_negative.product.category.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="stock.product_category_form_view_inherit" />
+        <field name="arch" type="xml">
+            <field name="removal_strategy_id" position="after">
+                <field name="allow_negative_stock" />
+            </field>
+        </field>
+    </record>
+
+        <record id="product.product_template_tree_view" model="ir.ui.view">
+        <field name="name">product.template.product.tree</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree string="Product"  >
+                <field name="product_variant_count" invisible="1"/>
+
+                <field name="sequence" widget="handle" readonly="1"/>
+                <field name="default_code" optional="show"/>
+                <field name="barcode" optional="hide" attrs="{'readonly': [('product_variant_count', '>', 1)]}"/>
+                <field name="name"/>
+		<field name="uom_id" readonly="1" optional="show" groups="uom.group_uom"/>
+		<field name="x_expiry"/>
+                <field name="qty_available"/>
+                <field name="virtual_available"/>
+ 		<field name="x_reorder"/>
+                
+                <field name="company_id" options="{'no_create_edit': True}"
+                    groups="base.group_multi_company" optional="hide"/>
+                <field name="list_price" string="Sales Price" optional="show"/>
+                <field name="standard_price" optional="show" readonly="1"/>
+
+                <field name="is_low" invisible="1"/>
+                <field name="is_expireed" invisible="1"/>
+                <field name="categ_id" optional="hide"/>
+                <field name="type" optional="hide" readonly="1"/>
+                
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_stock_product_template_tree" model="ir.ui.view">
+            <field name="name">product.template.stock.tree.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="decoration-danger">is_expireed == True</attribute>
+                    <attribute name="decoration-warning">is_low == True</attribute>
+                </tree>
+            </field>
+        </record>
+
+
+
+    <record id="view_product_report_tree_ref" model="ir.ui.view">
+        <field name="name">product.product.tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Product" limit="5000">
+                <field name="name"/>
+                <field name="qty_available" sum="total"/>
+                <field name="cost_value" sum="total"/>
+                <field name="sales_value" sum="total"/>
+            </tree>
+        </field>
+     </record>
+
+     <record id="custom_product_product_action_product_report" model="ir.actions.act_window">
+        <field name="name">Inventory Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_no_negative.view_product_report_tree_ref"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Inventory Items
+            </p>
+        </field>
+    </record>
+
+     <menuitem id="menu_inventory_valuation_rep" name="Inventory Valuation Report" action="custom_product_product_action_product_report"
+        parent="stock.menu_stock_inventory_control" sequence="1"/>
+
+       <record id="view_exchange_updater_form" model="ir.ui.view">
+            <field name="name">exchange.updater.form</field>
+            <field name="model">exchange.updater</field>
+            <field name="arch" type="xml">
+                <form string="Daily Exchange Updater" >
+                    <header>
+                        <button name="analyze" groups="account.group_account_manager" string="Analyze" states="draft" type="object" class="oe_highlight" />
+                        <button name="exchange_approved" groups="account.group_account_manager" string="Exchange Approved" states="draft" type="object" />
+                       <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="last_rate"/>
+                                <field name="current_rate" />
+                                <field name="percentage"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <notebook>
+
+                           <page  string="Product List">
+                                <field name="exchange_updater_line_ids">
+                                      <tree string="Summary" limit="5000" editable="bottom">
+                                            <field name="product_id"/>
+                                            <field name="current_price"/>
+                                            <field name="exact_increase"/>
+                                            <field name="rounded_change"/>
+                                        </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    <record id="view_exchange_updater_tree" model="ir.ui.view">
+            <field name="name">exchange.updater.tree</field>
+            <field name="model">exchange.updater</field>
+            <field name="arch" type="xml">
+                <tree string="Exchange Updater">
+                           <field name="date"/>
+                            <field name="last_rate"/>
+                            <field name="current_rate"/>
+                            <field name="percentage"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="exchange_updater_action" model="ir.actions.act_window">
+            <field name="name">Exchange Updater</field>
+            <field name="res_model">exchange.updater</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+             <p class="o_view_nocontent_smiling_face">
+               Create a Exchange Updater
+             </p>
+            </field>
+        </record>
+
+    <menuitem
+                    id="menu_exchange_updater"
+                    name="Exchange Updater"
+                    action="exchange_updater_action"
+                    web_icon="stock_no_negative,static/description/exchange_updater.png"
+                    sequence="100"/>
+					
+	    <record id="view_product_store_report_tree_ref" model="ir.ui.view">
+        <field name="name">stock.quant.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <tree string="Product" limit="5000">
+                <field name="product_id"/>
+                <field name="quantity" sum="total"/>
+				<field name="reorder_level" />
+				 <field name="sales_value" />
+				<field name="cost_value" />
+				<field name="is_expireed" string="Expired" />
+            </tree>
+        </field>
+     </record>
+	 
+     <record id="custom_product_store" model="ir.actions.act_window">
+        <field name="name">Store</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.quant</field>
+		<field name="domain">[('location_id', '=', 20)]</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_no_negative.view_product_store_report_tree_ref"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Inventory Items
+            </p>
+        </field>
+    </record>
+
+     <menuitem id="menu_inventory_store" name="Store" action="custom_product_store"
+	 parent="point_of_sale.menu_point_root"
+        sequence="11"/>					
+					
+    <record id="view_stock_quants_tree" model="ir.ui.view">
+            <field name="name">stock.quant.tree.inherit</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock_no_negative.view_product_store_report_tree_ref"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="decoration-warning">reorder_level > quantity</attribute>
+					<attribute name="decoration-danger">is_expireed == True</attribute>
+                </tree>
+            </field>
+        </record>					
+</odoo>

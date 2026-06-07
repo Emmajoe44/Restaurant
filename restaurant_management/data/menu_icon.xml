@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="point_of_sale.menu_point_root" model="ir.ui.menu">
+            <field name="web_icon">restaurant_management,static/description/icon.png</field>
+        </record>
+    </data>
+</odoo>

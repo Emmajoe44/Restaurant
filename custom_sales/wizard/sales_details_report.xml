@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="sales_details_report"
+                model="sales.details.wizard"
+                string="Sales Details"
+                name="custom_sales.sales_details_report_view"
+                report_type="qweb-pdf"
+                print_report_name="'POS Session Summary - %s -%s -%s' % (object.id,object.id,object.id)"
+                menu="False"
+        />
+
+
+        <template id="sales_details_report_view">
+            <t t-call="web.html_container">
+
+                <div class="header"
+                     style="font-family:KacstNaskh,Verdana,Arial,sans-serif;border-bottom: 1px solid black;padding-bottom:10px">
+                    <div class="col-3">
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                    </div>
+                </div>
+
+
+                <div class="article mt0 o_report_layout_standard" >
+                    <h5 class="text-center">
+                        <strong>Sales Details</strong>
+                    </h5>
+                    <div class="text-center">
+                        <span class="text-left" style="padding-right:20px">
+                        <strong>From :</strong>
+                        <t t-esc="from_date"/>
+                    </span>
+                    <span class="text-left" style="padding-right:30px">
+                        <strong>To :</strong>
+                        <t t-esc="to_date"/>
+                    </span>
+                    </div>
+
+                    <br/>
+                    <span class="text-left" style="padding-right:20px">
+                        <strong>Currency :</strong>
+                        <t t-esc="currency_name"/>
+                    </span>
+                    <span class="text-right" style="padding-left:520px">
+                        <strong>Total Amount :</strong>
+                        <t t-esc="total_amount"/>
+                    </span>
+                    <span class="text-right" style="padding-left:0px">
+                        <strong>Status :</strong>
+                        <t t-esc="state"/>
+                    </span>
+                    <div></div>
+                    <br/>
+                    <ol type="1" style="text-align:center;list-style-position:inside;list-style-type: decimal">
+                        <table class="table table-sm table-bordered" style="padding-top:500px">
+                            <thead>
+                                <th class="text-center" style="width: 15%">#</th>
+                                <th class="text-center" style="width: 15%">Number</th>
+                                <th class="text-center" style="width: 18%">Date</th>
+                                <th class="text-center" style="width: 25%">Customer</th>
+                                <th class="text-center" style="width: 25%">Sales Person</th>
+                                <th class="text-center" style="width: 20%">Amount</th>
+                            </thead>
+                            <tbody>
+
+
+                                <t t-foreach="docs" t-as="doc">
+
+                                    <tr>
+                                        <td class="text-center">
+                                            <li></li>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['sale_order_number']"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['create_date']"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['customer']"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['sales_person']"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </ol>
+                </div>
+                <div class="footer">
+                    <div class="row text-center" style="border-top: 1px solid black;">
+                        <div class="col col-3 offset-9 text-right">
+                            <ul class="list-inline mt-2">
+                                <li class="list-inline-item">Page:</li>
+                                <li class="list-inline-item">
+                                    <span class="page"/>
+                                </li>
+                                <li class="list-inline-item">/</li>
+                                <li class="list-inline-item">
+                                    <span class="topage"/>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+﻿<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="150" cy="150" r="145" fill="#ffffff" stroke="#1f3a93" stroke-width="3"/>
+  <circle cx="150" cy="130" r="70" fill="none" stroke="#1f3a93" stroke-width="2"/>
+  <circle cx="150" cy="130" r="65" fill="none" stroke="#ff6b35" stroke-width="1.5"/>
+  <g transform="translate(105, 100)">
+    <rect x="0" y="0" width="4" height="50" fill="#1f3a93" rx="2"/>
+    <circle cx="0" cy="0" r="5" fill="#1f3a93"/>
+    <rect x="-12" y="5" width="3" height="28" fill="#1f3a93" rx="1.5"/>
+    <rect x="-4" y="5" width="3" height="28" fill="#1f3a93" rx="1.5"/>
+    <rect x="4" y="5" width="3" height="28" fill="#1f3a93" rx="1.5"/>
+  </g>
+  <g transform="translate(195, 100)">
+    <polygon points="0,0 -3,50 3,50" fill="#ff6b35" stroke="#1f3a93" stroke-width="1"/>
+    <circle cx="0" cy="-5" r="6" fill="#1f3a93"/>
+  </g>
+  <ellipse cx="150" cy="185" rx="45" ry="35" fill="#ff6b35" opacity="0.8"/>
+  <rect x="125" y="175" width="50" height="12" fill="#1f3a93" rx="2"/>
+  <circle cx="120" cy="175" r="4" fill="#1f3a93"/>
+  <circle cx="135" cy="175" r="4" fill="#1f3a93"/>
+  <circle cx="150" cy="175" r="4" fill="#1f3a93"/>
+  <circle cx="165" cy="175" r="4" fill="#1f3a93"/>
+  <circle cx="180" cy="175" r="4" fill="#1f3a93"/>
+</svg>

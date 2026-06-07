@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="bi_pos_product_exchange_template" inherit_id="point_of_sale.template" xml:space="preserve">
+	<t t-name="BiWarningPopup" owl="1">
+		<div role="dialog" class="modal-dialog">
+			<Draggable>
+				<div class="popup bi-popup-width">
+					<header class="title drag-handle" style="background-color: #7f82ac; color: #fff;height: 20px;">
+						Product Out of Stock
+					</header>
+					<main class="body">
+						<br/>
+						This Product <b t-esc="props.name"/> is not in stock.Click into the Order button if you still want to add a product.
+						<br/>
+						<br/>
+					</main>
+					<footer class="footer" style="background-color: #7f82ac; color: #fff;">
+						<div style="background-color: rgb(94, 191, 143);color: white;" t-on-click="order" class="button">
+							Order
+						</div>
+						<div class="button cancel odoo-theme-color" t-on-click="cancel" style="background-color: #E0E0E0; color: black;">
+							Cancel
+						</div>
+					</footer>
+				</div>
+			</Draggable>
+		</div>
+	</t>
+</templates>

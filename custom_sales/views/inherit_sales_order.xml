@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Sale Order Form View to Modify it -->
+        <record id="inherit_sale_order_from_view" model="ir.ui.view">
+            <field name="name">Inherit Sale Order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('cancel','done','sale'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position='attributes'>
+                    <attribute name="options">{'currency_field': 'currency_id_to_get_rate'}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_tax']" position='attributes'>
+                    <attribute name="options">{'currency_field': 'currency_id_to_get_rate'}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position='attributes'>
+                    <attribute name="options">{'currency_field': 'currency_id_to_get_rate'}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="attributes">
+                    <attribute name="options">{'currency_field': 'currency_id_to_get_rate'}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

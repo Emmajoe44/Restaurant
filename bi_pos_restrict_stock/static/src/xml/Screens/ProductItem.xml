@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<templates id="bi_pos_restrict_stock" inherit_id="point_of_sale.template" xml:space="preserve">
+		<t t-name="ProductItem" t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension" owl="1">
+			<xpath expr="//div[hasclass('product-img')]" position="inside">
+				<t t-if="props.product.type != 'consu' and props.product.type != 'service'">
+					<t t-if="env.pos.config.pos_display_stock">
+						<t t-if="env.pos.config.pos_stock_type == 'onhand'">
+							<t t-if="props.product.qty_available > 0">
+								<span class="qty-label">
+									<t t-esc="props.product.qty_available"/>
+								</span>
+							</t>
+							<t t-else="">
+								<span class="qty-label out-of-stock-qty">
+									<t t-esc="props.product.qty_available"/>
+								</span>
+							</t>
+						</t>
+						<t t-if="env.pos.config.pos_stock_type == 'virtual'">
+							<t t-if="props.product.virtual_available > 0">
+								<span class="qty-label">
+									<t t-esc="props.product.virtual_available"/>
+								</span>
+							</t>
+							<t t-else="">
+								<span class="qty-label out-of-stock-qty">
+									<t t-esc="props.product.virtual_available"/>
+								</span>
+							</t>
+						</t>
+					</t>
+				</t>
+			</xpath>
+		</t>
+
+	</templates>
+
+

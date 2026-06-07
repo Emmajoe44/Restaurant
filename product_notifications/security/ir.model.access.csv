@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_notifications_product_notifications,product_notifications.product_notifications,model_product_notifications_product_notifications,base.group_user,1,1,1,1

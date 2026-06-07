@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="RefundOrderButton" owl="1">
+        <div class="control-button" t-att-class="{ highlight: isHighlighted }">
+            <i class="fa fa-undo"></i>
+            <span> </span>
+            <span>Refund</span>
+        </div>
+    </t>
+
+    <t t-name="ExchangeOrderButton" owl="1">
+        <div class="control-button" t-att-class="{ highlight: isHighlighted }">
+            <i class="fa fa-exchange"></i>
+            <span> </span>
+            <span>Exchange</span>
+        </div>
+    </t>
+
+</templates>

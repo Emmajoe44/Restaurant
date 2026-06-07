@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="menu_exchange_updater" model="ir.ui.menu">
+            <field name="web_icon">stock_no_negative,static/description/exchange_updater.png</field>
+        </record>
+    </data>
+</odoo>

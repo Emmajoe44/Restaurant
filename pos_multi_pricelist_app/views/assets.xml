@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<template id="assets_for_pos_pricelist" inherit_id="point_of_sale.assets">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/pos_multi_pricelist_app/static/src/js/multi_pricelist.js"/>
+				<script type="text/javascript" src="/pos_multi_pricelist_app/static/src/js/Screens/SetPricelistButtonInherit.js"/>
+			</xpath>
+		</template>
+	</data>
+</odoo>

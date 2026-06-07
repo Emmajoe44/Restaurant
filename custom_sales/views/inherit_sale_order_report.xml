@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Sale Order Report to Modify it -->
+        <template id="inherit_sales_report" inherit_id="sale.report_saleorder_document">
+
+            <xpath expr="//td[@name='td_subtotal']" position="replace">
+                <td name="td_subtotal" class="text-right o_price_total">
+                    <span t-field="line.price_subtotal" t-options='{"display_currency": doc.currency_id_to_get_rate}'
+                          groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <span t-field="line.price_total" t-options='{"display_currency": doc.currency_id_to_get_rate}'
+                          groups="account.group_show_line_subtotals_tax_included"/>
+                </td>
+            </xpath>
+            <!--         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+            <xpath expr="//td[@name='td_amount_total']" position="replace">
+                <td name="td_amount_total" class="text-right">
+                    <span t-field="doc.amount_total" t-options='{"display_currency": doc.currency_id_to_get_rate}'/>
+                </td>
+            </xpath>
+            <!--         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+            <xpath expr="//td[@name='td_amount_untaxed']" position="replace">
+                <td name="td_amount_total" class="text-right">
+                    <span t-field="doc.amount_untaxed" t-options='{"display_currency": doc.currency_id_to_get_rate}'/>
+                </td>
+            </xpath>
+            <!--         ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        </template>
+
+    </data>
+</odoo>

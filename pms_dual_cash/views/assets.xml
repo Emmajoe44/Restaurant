@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pms_dual_cash/static/src/js/dual_cash_payment.js"/>
+            <script type="text/javascript" src="/pms_dual_cash/static/src/js/pos_currency_display.js"/>
+        </xpath>
+    </template>
+</odoo>

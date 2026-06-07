@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_categ_restaurant" model="product.category">
+        <field name="name">Restaurant</field>
+    </record>
+
+    <record id="pos_categ_food" model="pos.category">
+        <field name="name">Food</field>
+    </record>
+    <record id="pos_categ_drinks" model="pos.category">
+        <field name="name">Drinks</field>
+    </record>
+    <record id="pos_categ_desserts" model="pos.category">
+        <field name="name">Desserts</field>
+    </record>
+</odoo>

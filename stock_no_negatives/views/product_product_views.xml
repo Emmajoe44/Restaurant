@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+<data>
+    <record id="view_company_exchange_form" model="ir.ui.view">
+        <field name="name">company.exchange.form</field>
+        <field name="model">company.exchange</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Currency Exchange">
+                <header>
+                    <button string="Validate" name="validate" groups="stock.group_stock_manager"
+                            type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="from_account_id"/>
+                            <field name="to_account_id"/>
+
+                        </group>
+                        <group>
+                            <field name="available_amount"/>
+                            <field name="available_amount_usd"/>
+                            <field name="existing_exchange_rate"/>
+                            <field name="ref"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="exchange_rate"/>
+
+                        </group>
+
+                        <group>
+                            <field name="expected_amount"/>
+                            <field name="exchange_gain_loss"/>
+                            <field name="account_move_id" groups="account.group_account_invoice,account.group_account_readonly" attrs="{'invisible': [('state', 'not in', ['post', 'done'])]}" readonly="1"/>
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="company_exchange_management_tree" model="ir.ui.view">
+        <field name="name">company.exchange.tree</field>
+        <field name="model">company.exchange</field>
+        <field name="arch" type="xml">
+            <tree string="Currency Exchange" >
+                            <field name="ref"/>
+                            <field name="date"/>
+                            <field name="from_account_id"/>
+                            <field name="to_account_id"/>
+                            <field name="available_amount"/>
+                            <field name="available_amount_usd"/>
+                            <field name="existing_exchange_rate"/>
+                            <field name="amount"/>
+                            <field name="exchange_rate"/>
+                            <field name="expected_amount"/>
+                            <field name="exchange_gain_loss"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="company_exchange_action" model="ir.actions.act_window">
+        <field name="name">Currency Exchange</field>
+        <field name="res_model">company.exchange</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Currency Exchange
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_company_exchange_action"
+            name="Currency Exchange"
+	    web_icon="stock_no_negatives,static/description/currency.jpg"
+            action="company_exchange_action"
+            sequence="100"/>
+    </data>
+</odoo>

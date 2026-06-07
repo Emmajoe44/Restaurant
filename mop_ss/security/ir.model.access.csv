@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_exchange_group,company.exchange,model_company_exchange,,1,1,1,1
+
+access_compound_payment_user,access_compound_payment_user,model_compound_payment,,1,1,1,1
+access_request_directorate_user,access_request_directorate_user,model_request_directorate,,1,1,1,1
+access_payment_request_user,access_payment_request_user,model_payment_request,,1,1,1,1
+access_compound_payment_detail_user,access_compound_payment_detail_user,model_compound_payment_detail,,1,1,1,1
+
+access_payment_receipts_user,access_payment_receipts_user,model_payment_receipts,,1,1,1,1

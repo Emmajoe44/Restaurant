@@ -1,0 +1,15 @@
+<odoo noupdate="1">
+    <!-- Sequences for hotel folio -->
+    <record id="seq_payment_request" model="ir.sequence">
+        <field name="name">Payment Request</field>
+        <field name="code">payment.request</field>
+        <field name="prefix">PAY/</field>
+        <field name="padding">5</field>
+    </record>
+        <record id="seq_payment_receipts" model="ir.sequence">
+        <field name="name">Payment Receipts</field>
+        <field name="code">payment.receipts</field>
+        <field name="prefix">REC/</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

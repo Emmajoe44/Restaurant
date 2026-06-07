@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bi_pos_restrict_stock" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/bi_pos_restrict_stock/static/src/css/stock.css"/>
+            <script type="text/javascript" src="/bi_pos_restrict_stock/static/src/js/Chrome.js"/>
+            <script type="text/javascript" src="/bi_pos_restrict_stock/static/src/js/models.js"/>
+            <script type="text/javascript" src="/bi_pos_restrict_stock/static/src/js/Screens/ProductWidget.js"/>
+            <script type="text/javascript" src="/bi_pos_restrict_stock/static/src/js/Screens/ProductScreen.js"/>
+            <script type="text/javascript" src="/bi_pos_restrict_stock/static/src/js/Popups/BiWarningPopup.js"/>
+        </xpath>
+    </template>
+</odoo>

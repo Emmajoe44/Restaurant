@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pms_restaurant_demo_setup_form" model="ir.ui.view">
+        <field name="name">pms.restaurant.demo.setup.form</field>
+        <field name="model">pms.restaurant.demo.setup</field>
+        <field name="arch" type="xml">
+            <form string="Restaurant demo">
+                <field name="can_reset_accounting" invisible="1"/>
+                <field name="is_cashier_only" invisible="1"/>
+                <group>
+                    <p colspan="2" attrs="{'invisible': [('can_reset_accounting', '=', False)]}">
+                        This will delete all POS orders, sessions, and accounting journal entries,
+                        then load fresh restaurant demo products with USD and SSP prices.
+                    </p>
+                    <p colspan="2" attrs="{'invisible': [('is_cashier_only', '=', False)]}">
+                        Load or update demo restaurant products and prices (USD + SSP).
+                        Accounting entries are not changed.
+                    </p>
+                    <field name="confirm" attrs="{'invisible': [('can_reset_accounting', '=', False)]}"/>
+                </group>
+                <footer>
+                    <button name="action_load_demo_only" type="object"
+                            string="Load demo products only" class="btn-primary"
+                            attrs="{'invisible': [('is_cashier_only', '=', False)]}"/>
+                    <button name="action_reset_and_load_demo" type="object"
+                            string="Reset accounting and load demo" class="btn-primary"
+                            attrs="{'invisible': [('can_reset_accounting', '=', False)]}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pms_restaurant_demo_setup" model="ir.actions.act_window">
+        <field name="name">Restaurant demo</field>
+        <field name="res_model">pms.restaurant.demo.setup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_pms_restaurant_demo_setup_accounting"
+              name="Restaurant demo (reset)"
+              parent="account.menu_finance_configuration"
+              action="action_pms_restaurant_demo_setup"
+              sequence="90"
+              groups="pms_dual_cash.group_pms_accountant,pms_dual_cash.group_pms_admin"/>
+
+    <!-- Under Orders (not Configuration): cashiers cannot open Configuration menus -->
+    <menuitem id="menu_pms_restaurant_demo_setup_pos"
+              name="Load restaurant demo products"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_pms_restaurant_demo_setup"
+              sequence="95"
+              groups="pms_dual_cash.group_pms_cashier,pms_dual_cash.group_pms_admin"/>
+</odoo>

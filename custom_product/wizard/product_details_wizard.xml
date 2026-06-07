@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--    Product Details Wizard Form    -->
+        <record id="product_details_wizard_view_form" model="ir.ui.view">
+            <field name="name">Product Details</field>
+            <field name="model">product.details.wizard</field>
+            <field name="arch" type="xml">
+                <form string="product_details_wizard_form">
+                    <footer>
+                        <button name="print_product_details" string="Print" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--    Product Details Wizard Action    -->
+        <record id="product_details_wizard_action" model="ir.actions.act_window">
+            <field name="name">Product Details Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.details.wizard</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+        </record>
+        <!--    product Inventory Product Details Wizard Menu    -->
+        <menuitem id="inventory_product_details_menu" name="Product Details" parent="stock.menu_warehouse_report" action="product_details_wizard_action"
+                  sequence="2"/>
+    </data>
+</odoo>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+<data>
+    <record id="view_company_exchange_form" model="ir.ui.view">
+        <field name="name">company.exchange.form</field>
+        <field name="model">company.exchange</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Currency Exchange">
+                <header>
+                    <button string="Validate" name="validate" groups="stock.group_stock_manager"
+                            type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+                    <field name="state" widget="statusbar" options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="from_account_id"/>
+                            <field name="to_account_id"/>
+
+                        </group>
+                        <group>
+                            <field name="available_amount"/>
+                            <field name="available_amount_usd"/>
+                            <field name="existing_exchange_rate"/>
+                            <field name="ref"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="exchange_rate"/>
+
+                        </group>
+
+                        <group>
+                            <field name="expected_amount"/>
+                            <field name="exchange_gain_loss"/>
+                            <field name="account_move_id" groups="account.group_account_invoice,account.group_account_readonly" attrs="{'invisible': [('state', 'not in', ['post', 'done'])]}" readonly="1"/>
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="company_exchange_management_tree" model="ir.ui.view">
+        <field name="name">company.exchange.tree</field>
+        <field name="model">company.exchange</field>
+        <field name="arch" type="xml">
+            <tree string="Currency Exchange" >
+                            <field name="ref"/>
+                            <field name="date"/>
+                            <field name="from_account_id"/>
+                            <field name="to_account_id"/>
+                            <field name="available_amount"/>
+                            <field name="available_amount_usd"/>
+                            <field name="existing_exchange_rate"/>
+                            <field name="amount"/>
+                            <field name="exchange_rate"/>
+                            <field name="expected_amount"/>
+                            <field name="exchange_gain_loss"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="company_exchange_action" model="ir.actions.act_window">
+        <field name="name">Currency Exchange</field>
+        <field name="res_model">company.exchange</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Currency Exchange
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_company_exchange_action"
+            name="Currency Exchange"
+	    web_icon="mop_ss,static/description/currency.jpg"
+            action="company_exchange_action"
+            sequence="100"/>
+
+
+
+	    <record id="view_compound_payment_form" model="ir.ui.view">
+            <field name="name">compound.payment.form</field>
+            <field name="model">compound.payment</field>
+            <field name="arch" type="xml">
+                <form string="SIV">
+					<header>
+						<button name="validate_payment" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+					</header>
+                    <sheet>
+
+                        <group>
+                            <group>
+								<field name="source_pv"/>
+                                <field name="payment_date"/>
+                                <field name="payment_method_id"/>
+                                <field name="exchange_rate"/>
+                            </group>
+                            <group>
+
+								<field name="total_amount"/>
+                                <field name="remark"/>
+								<field name="account_move_id"/>
+                            </group>
+                        </group>
+
+                         <notebook>
+
+
+                            <page string="Payment Details">
+                                <field name="compound_payment_detail_ids">
+                                    <tree editable="bottom">
+                                        <field name="account_id"/>
+                                        <field name="desc"/>
+                                        <field name="partner_id"/>
+                                        <field name="amount"/>
+                                        <field name="analytic_account_id"/>
+                                        <field name="balance"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+	    <record id="view_compound_payment_tree" model="ir.ui.view">
+        <field name="name">compound.payment.tree</field>
+        <field name="model">compound.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Compound Entry">
+								<field name="source_pv"/>
+                                <field name="name"/>
+                                <field name="payment_date"/>
+                                <field name="remark"/>
+								<field name="payment_method_id"/>
+                                <field name="total_amount"/>
+                                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+		<record id="menu_compound_payment_action" model="ir.actions.act_window">
+            <field name="name">Compound Entry</field>
+            <field name="res_model">compound.payment</field>
+            <field name="context"></field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_compound_payment_menu"
+                name="Cash Payment"
+                action="menu_compound_payment_action"
+                sequence="5"
+                parent="account.menu_finance_payables"
+        />
+
+
+	    <record id="view_payment_request_form" model="ir.ui.view">
+            <field name="name">payment.request.form</field>
+            <field name="model">payment.request</field>
+            <field name="arch" type="xml">
+                <form string="SIV">
+					<header>
+						<button name="validate_payment" states="approved" groups="account.group_account_manager" string="Confirm Payment" type="object" class="oe_highlight"/>
+                        <button name="request_approval" states="draft" groups="account.group_account_user,account.group_account_manager" string="Request Apporval" type="object" class="oe_highlight"/>
+                        <button name="approved" states="requested" groups="stock.group_stock_manager" string="Approve" type="object" class="oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,requested,approved,paid"/>
+					</header>
+                    <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+								<field name="request_date"/>
+                                <field name="directorate_id"/>
+
+                                <field name="requested_by"/>
+                                <field name="paid_to"/>
+                                <field name="expense_account_id" required="1"/>
+                            </group>
+                            <group>
+
+								<field name="requested_amount"/>
+                                <field name="payment_method_id"/>
+                                <field name="available_amount"/>
+                                <field name="paid_amount"/>
+								<field name="account_move_id"/>
+                                <field name="registered_by"/>
+								<field name="approved_by"/>
+                                <field name="payment_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remark"/>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+	    <record id="view_payment_request_tree" model="ir.ui.view">
+        <field name="name">payment.request.tree</field>
+        <field name="model">payment.request</field>
+        <field name="arch" type="xml">
+            <tree string="Payment Request">
+								<field name="name"/>
+                                <field name="request_date"/>
+                                <field name="directorate_id"/>
+                                <field name="requested_by"/>
+                                <field name="paid_to"/>
+								<field name="requested_amount"/>
+                                <field name="payment_method_id"/>
+                                <field name="available_amount"/>
+								<field name="account_move_id"/>
+                                <field name="registered_by"/>
+								<field name="approved_by"/>
+            </tree>
+        </field>
+    </record>
+
+		<record id="menu_payment_request_action" model="ir.actions.act_window">
+            <field name="name">Payment Request</field>
+            <field name="res_model">payment.request</field>
+            <field name="context"></field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_payment_request_menu"
+                name="Payment Request"
+                action="menu_payment_request_action"
+                sequence="5"
+                parent="account.menu_finance_payables"
+        />
+    
+    
+    	    <record id="view_payment_receipts_form" model="ir.ui.view">
+            <field name="name">payment.receipts.form</field>
+            <field name="model">payment.receipts</field>
+            <field name="arch" type="xml">
+                <form string="SIV">
+					<header>
+						<button name="validate_payment" states="draft" groups="account.group_account_manager" string="Confirm Payment" type="object" class="oe_highlight"/>
+                     <field name="state" widget="statusbar" statusbar_visible="draft,received"/>
+					</header>
+                    <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+								<field name="payment_date"/>
+                                <field name="income_account_id"/>
+                                <field name="payment_method_id"/>
+                                <field name="available_amount"/>
+
+                            </group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="exchange_rate" required="1"/>
+								<field name="received_by"/>
+
+                                <field name="approved_by"/>
+                                <field name="account_move_id"/>
+                            </group>
+
+                        </group>
+                        <group>
+                            <field name="remark"/>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+	    <record id="view_payment_receipts_tree" model="ir.ui.view">
+        <field name="name">payment.receipts.tree</field>
+        <field name="model">payment.receipts</field>
+        <field name="arch" type="xml">
+            <tree string="Payment Request">
+								<field name="payment_date"/>
+                                <field name="income_account_id"/>
+                                <field name="payment_method_id"/>
+                                <field name="available_amount"/>
+                                <field name="exchange_rate"/>
+								<field name="received_by"/>
+                                <field name="approved_by"/>
+            </tree>
+        </field>
+    </record>
+
+		<record id="menu_payment_receipts_action" model="ir.actions.act_window">
+            <field name="name">Payment Recipts</field>
+            <field name="res_model">payment.receipts</field>
+            <field name="context"></field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_payment_receipts_menu"
+                name="Payment Recipts"
+                action="menu_payment_receipts_action"
+                sequence="5"
+                parent="account.menu_finance_receivables"
+        />
+
+
+    </data>
+</odoo>

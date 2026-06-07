@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_tree_dual_currency" model="ir.ui.view">
+        <field name="name">pos.order.tree.dual.currency</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount_total" position="after">
+                <field name="amount_total_usd" sum="Total USD"/>
+                <field name="amount_total_ssp" sum="Total SSP"/>
+            </field>
+            <field name="amount_total" position="attributes">
+                <attribute name="string">Total (order currency)</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_pos_form_currency" model="ir.ui.view">
+        <field name="name">pos.order.form.currency</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="currency_id" groups="base.group_multi_currency"/>
+                <field name="amount_total_usd"/>
+                <field name="amount_total_ssp"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_ids']/tree/field[@name='amount']" position="attributes">
+                <attribute name="widget">monetary</attribute>
+                <attribute name="options">{'currency_field': 'currency_id'}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

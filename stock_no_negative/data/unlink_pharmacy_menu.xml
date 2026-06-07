@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <delete model="ir.ui.menu" id="menu_inventory_pharmacy"/>
+        <delete model="ir.actions.act_window" id="custom_product_pharmacy1"/>
+    </data>
+</odoo>

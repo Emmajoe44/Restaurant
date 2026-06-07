@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_exchange_updater,exchange.updater,model_exchange_updater,,1,1,1,1
+access_exchange_updater_line,exchange.updater.line,model_exchange_updater_line,,1,1,1,1
