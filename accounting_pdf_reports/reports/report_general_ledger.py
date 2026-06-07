@@ -118,7 +118,11 @@ class ReportGeneralLedger(models.AbstractModel):
         display_account = data['form']['display_account']
         codes = []
         if data['form'].get('journal_ids', False):
-            codes = [journal.code for journal in self.env['account.journal'].search([('id', 'in', data['form']['journal_ids'])])]
+            # sanitize ids to avoid non-integer values from the form
+            from utils.sanitize_ids import safe_int_ids
+            journal_ids = safe_int_ids(data['form'].get('journal_ids'))
+            if journal_ids:
+                codes = [journal.code for journal in self.env['account.journal'].search([('id', 'in', journal_ids)])]
 
         accounts = docs if model == 'account.account' else self.env['account.account'].search([])
         accounts_res = self.with_context(data['form'].get('used_context',{}))._get_account_move_entry(accounts, init_balance, sortby, display_account)

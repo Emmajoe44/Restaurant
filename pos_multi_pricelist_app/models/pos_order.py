@@ -563,6 +563,11 @@ class PosOrder(models.Model):
             if (existing_order and existing_order.state == 'draft') or not existing_order:
                 order_ids.append(self._process_order(order, draft, existing_order))
 
+        # Sanitize incoming ids to avoid temporary client-side ids like 'virtual_770'
+        from utils.sanitize_ids import safe_int_ids
+        order_ids = safe_int_ids(order_ids)
+        if not order_ids:
+            return []
         return self.env['pos.order'].search_read(domain = [('id', 'in', order_ids)], fields = ['id', 'pos_reference'])
 
     def _create_order_picking(self):
@@ -678,6 +683,11 @@ class PosOrder(models.Model):
         :type server_ids: list.
         :returns: list -- list of db-ids for the removed orders.
         """
+        # Sanitize server_ids in case the client passed temporary ids like 'virtual_770'
+        from utils.sanitize_ids import safe_int_ids
+        server_ids = safe_int_ids(server_ids)
+        if not server_ids:
+            return []
         orders = self.search([('id', 'in', server_ids),('state', '=', 'draft')])
         orders.write({'state': 'cancel'})
         # TODO Looks like delete cascade is a better solution.

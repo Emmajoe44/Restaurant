@@ -357,6 +357,19 @@ class AccountAssetAsset(models.Model):
         if len(move_ids) > 1:
             name = _('Disposal Moves')
             view_mode = 'tree,form'
+        # sanitize move_ids in case non-integer values slipped in
+        from utils.sanitize_ids import safe_int_ids
+        move_ids = safe_int_ids(move_ids)
+        if not move_ids:
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'account.move',
+                'view_mode': view_mode,
+                'view_type': 'form',
+                'target': 'current',
+                'res_id': False,
+                'name': name,
+            }
         return {
             'name': name,
             'view_type': 'form',
